@@ -23,7 +23,6 @@ public class SVregister extends HttpServlet {
 
         try {
             DatabaseConnection.inicializar();
-
             DatabaseReference dbref = DatabaseConnection.getDatabaseReference("usuarios");
             String userId = dbref.push().getKey();
             if (userId != null) {

@@ -22,9 +22,9 @@
         </label>
         <nav class="navbar">
             <ul>
-                <li><a href="#">inicio</a></li>
-                <li><a href="#">iniciar sesión</a></li>
+                <li><a href="login.jsp">Iniciar sesión</a></li>
                 <li><a href="registro.jsp">Registrarse</a></li>
+                <li><a href="#">Ver catálogo</a></li>
             </ul>
         </nav>
     </div>

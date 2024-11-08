@@ -25,6 +25,9 @@ public class DatabaseConnection {
         }
     }
     public static DatabaseReference getDatabaseReference(String path) {
+        if (database == null) {
+            throw new IllegalStateException("Database not initialized. Call inicializar() first.");
+        }
         return database.getReference(path);
     }
 }
