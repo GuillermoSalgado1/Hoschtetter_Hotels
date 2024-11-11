@@ -11,20 +11,28 @@
           rel="stylesheet">
     <link rel="stylesheet" href="indexStyle.css">
     <title>Hoschtetter Hotels</title>
+    <script type="module" src="interactiveIndex/indexDisplayName.js"></script>
 </head>
 
 <body>
 <header class="header">
     <div class="menu container">
-        <input type="checkbox" id="menu" />
+        <input type="checkbox" id="menu"/>
         <label for="menu">
             <img src="images/menu.png" class="menu-icono" alt="">
         </label>
         <nav class="navbar">
             <ul>
-                <li><a href="login.jsp">Iniciar sesión</a></li>
-                <li><a href="registro.jsp">Registrarse</a></li>
-                <li><a href="#">Ver catálogo</a></li>
+                <li><span id="loggedUserFName" style="font-size: 18px;
+    padding: 20px;
+    padding-right: 10px;
+    color: #FFFDFC;
+    display: block;
+    font-weight: 600;
+cursor: default"
+                ></span></li>
+                <li><a href="login.jsp" id="loginLink">Iniciar sesión</a></li>
+                <li><a href="catalogo.jsp">Ver catálogo</a></li>
             </ul>
         </nav>
     </div>
@@ -53,6 +61,7 @@
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
+                    <option value="3">4</option>
                 </select>
             </div>
             <button type="submit" class="search-button">Reservar</button>
@@ -60,50 +69,6 @@
 
     </div>
 </header>
-<section class="coffee">
-
-
-
-    <img class="coffee-img" src="#" alt="">
-    <div class="coffee-content container">
-        <h2>lorem</h2>
-        <p class="txt-p">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Necessitatibus aspernatur autem quos qui iure officia
-            tempore ipsam, consequatur, earum perferendis sint
-            assumenda neque saepe natus ducimus ut animi! Alias,
-            rerum.</p>
-
-        <div class="coffee-group">
-
-            <div class="coffee-1">
-                <img src="#" alt="">
-                <h3>lorem</h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam eos adipisci,
-                    maxime harum perspiciatis quod maiores unde, quo veniam ab non autem
-                </p>
-            </div>
-            <div class="coffee-1">
-                <img src="#" alt="">
-                <h3>lorem</h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam eos adipisci,
-                    maxime harum perspiciatis quod maiores unde, quo veniam ab non autem
-                </p>
-            </div>
-            <div class="coffee-1">
-                <img src="#" alt="">
-                <h3>lorem</h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam eos adipisci,
-                    maxime harum perspiciatis quod maiores unde, quo veniam ab non autem
-                </p>
-            </div>
-
-        </div>
-        <a href="#" class="btn-1">Informacion</a>
-    </div>
-</section>
 
 <main class="services">
 
