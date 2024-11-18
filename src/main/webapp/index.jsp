@@ -17,22 +17,21 @@
 <body>
 <header class="header">
     <div class="menu container">
-        <input type="checkbox" id="menu"/>
+        <input type="checkbox" id="menu" />
         <label for="menu">
             <img src="images/menu.png" class="menu-icono" alt="">
         </label>
         <nav class="navbar">
             <ul>
                 <li><span id="loggedUserFName" style="font-size: 18px;
-    padding: 20px;
-    padding-right: 10px;
-    color: #FFFDFC;
-    display: block;
-    font-weight: 600;
-cursor: default"
-                ></span></li>
+                        padding: 20px;
+                        padding-right: 10px;
+                        color: #FFFDFC;
+                        display: block;
+                        font-weight: 600;
+                        cursor: default">
+                </span></li>
                 <li><a href="login.jsp" id="loginLink">Iniciar sesión</a></li>
-                <li><a href="catalogo.jsp">Ver catálogo</a></li>
             </ul>
         </nav>
     </div>
@@ -45,9 +44,9 @@ cursor: default"
             animi placeat illum aspernatur!
         </p>
 
-        <form class="search-box">
+        <form class="search-box" >
 
-            <div class="search-item">
+            <div class="search-item" id="filter-form">
                 <label>Fecha inicio</label>
                 <input type="date" name="fechaInicio">
             </div>
@@ -56,19 +55,48 @@ cursor: default"
                 <input type="date" name="fechaTermino">
             </div>
             <div class="search-item">
-                <label>Personas</label>
-                <select name="person">
+                <label for="capacidad">Personas</label>
+                <select id="capacidad" name="capacidad">
+                    <option value="">Seleccionar...</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="3">4</option>
+                    <option value="4">4</option>
                 </select>
             </div>
-            <button type="submit" class="search-button">Reservar</button>
+            <div class="search-item">
+                <label for="precio">Precio</label>
+                <select id="precio" name="precio">
+                    <option value="">Seleccionar...</option>
+                    <option value="20-39">$20.000 - $39.999</option>
+                    <option value="40-69">$40.000 - $69.999</option>
+                    <option value="70-99">$70.000 - $99.999</option>
+                    <option value="100-159">$100.000 - $159.999</option>
+                </select>
+            </div>
+            <button type="button" class="search-button" id="applyFiltersBtn">Filtrar</button>
         </form>
 
     </div>
 </header>
+
+<section class="catalogo-group">
+    <div class="catalogo-habitaciones"></div>
+
+    <div class="modal-overlay">
+        <div class="modal-contenido">
+            <span class="modal-cerrar">&times;</span>
+            <img src="" alt="" class="modal-imagen">
+            <div class="modal-info">
+                <h2 class="modal-titulo"></h2>
+                <p class="modal-descripcion"></p>
+                <p><strong>Capacidad:</strong> <span class="modal-capacidad"></span> persona/s</p>
+                <p><strong>Baños:</strong> <span class="modal-banos"></span></p>
+                <p><strong>Precio:</strong> <span class="modal-precio"></span></p>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="interactiveIndex/catalogoJS.js"></script>
+</section>
 
 <main class="services">
 
