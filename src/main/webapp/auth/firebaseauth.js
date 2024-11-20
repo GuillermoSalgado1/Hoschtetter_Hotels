@@ -19,10 +19,15 @@ const app = initializeApp(firebaseConfig);
 function showMessage(message, divId) {
     var messageDiv = document.getElementById(divId);
     messageDiv.style.display = "block";
-    messageDiv.innerHTML = message;
     messageDiv.style.opacity = 1;
+    messageDiv.style.visibility = "visible";
+    messageDiv.style.height = "auto";
+    messageDiv.innerHTML = message;
+
     setTimeout(function () {
         messageDiv.style.opacity = 0;
+        messageDiv.style.visibility = "hidden";
+        messageDiv.style.height = "0";
     }, 5000);
 }
 
@@ -45,7 +50,7 @@ signUp.addEventListener('click', (event) => {
                 firstName: firstName,
                 lastName: lastName
             };
-            showMessage('Cuenta creada correctamente', 'signUpMessage');
+            showMessage('Cuenta creada correctamente.', 'signUpMessage');
             const docRef = doc(db, "users", user.uid);
             setDoc(docRef, userData)
                 .then(() => {
@@ -59,10 +64,10 @@ signUp.addEventListener('click', (event) => {
         .catch((error) => {
             const errorCode = error.code;
             if (errorCode == 'auth/email-already-in-use') {
-                showMessage('El correo ingresado ya esta en uso !!!', 'signUpMessage');
+                showMessage('El correo ingresado ya esta en uso.', 'signUpMessage');
             }
             else {
-                showMessage('Inhabilitado para crear usuario', 'signUpMessage');
+                showMessage('Inhabilitado para crear usuario.', 'signUpMessage');
             }
         })
 });
@@ -77,7 +82,7 @@ signIn.addEventListener('click', (event) => {
 
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            showMessage('Iniciando sesión', 'signInMessage');
+            showMessage('Iniciando sesión.', 'signInMessage');
             const user = userCredential.user;
             localStorage.setItem('loggedInUserId', user.uid);
             window.location.href = 'index.jsp';
@@ -85,7 +90,7 @@ signIn.addEventListener('click', (event) => {
         .catch((error) => {
             const errorCode = error.code;
             if (errorCode === 'auth/invalid-credential') {
-                showMessage('Correo o contraseña incorrectos', 'signInMessage');
+                showMessage('Correo o contraseña incorrectos.', 'signInMessage');
 
             }
             else {

@@ -11,7 +11,7 @@
           rel="stylesheet">
     <link rel="stylesheet" href="indexStyle.css">
     <title>Hoschtetter Hotels</title>
-    <script type="module" src="interactiveIndex/indexDisplayName.js"></script>
+    <script type="module" src="JavaScript/indexDisplayName.js"></script>
 </head>
 
 <body>
@@ -73,7 +73,7 @@
                     <option value="100-159">$100.000 - $159.999</option>
                 </select>
             </div>
-            <button type="button" class="search-button" id="applyFiltersBtn">Filtrar</button>
+            <button type="button" class="search-button" id="applyFiltersBtn" >Filtrar</button>
         </form>
 
     </div>
@@ -95,7 +95,7 @@
             </div>
         </div>
     </div>
-    <script type="module" src="interactiveIndex/catalogoJS.js"></script>
+    <script type="module" src="JavaScript/catalogoJS.js"></script>
 </section>
 
 <main class="services">

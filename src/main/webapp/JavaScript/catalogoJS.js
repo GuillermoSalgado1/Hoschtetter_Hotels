@@ -8,28 +8,45 @@ const ListaHabitaciones = [
     { nombre: "Habitación individual deluxe", capacidad: "1", precio: "35000", imagen: "images/habitacion-doble.jpg", descripcion: "La opción perfecta para una persona que desea una experiencia exclusiva. Con un diseño sofisticado y servicios de calidad superior, esta habitación garantiza una estancia placentera y memorable.", banos: "1"},
 ];
 
-// Mostrar habitaciones
 function displayRooms(Habitaciones) {
     const catalogo = document.querySelector(".catalogo-habitaciones");
     catalogo.innerHTML = "";
 
-    Habitaciones.forEach((habitacion, index) => {
+    Habitaciones.forEach((habitacion) => {
         const Card = document.createElement("div");
         Card.classList.add("habitacion-card");
+
         Card.innerHTML = `
-      <img src="${habitacion.imagen}" alt="${habitacion.nombre}">
-      <div class="info">
-        <h3>${habitacion.nombre}</h3>
-        <p class="descripcion">${habitacion.descripcion}</p>
-        <p class="precio">$${habitacion.precio.toLocaleString()} por noche</p>
-        <button onclick="openModal(${index})">Ver detalles</button>
-      </div>
-    `;
+        <img src="${habitacion.imagen}" alt="${habitacion.nombre}">
+        <div class="info">
+            <h3>${habitacion.nombre}</h3>
+            <p class="descripcion">${habitacion.descripcion}</p>
+            <p class="precio">$${parseInt(habitacion.precio).toLocaleString()} por noche</p>
+        </div>
+        `;
+
+        Card.addEventListener("click", () => openModal(habitacion));
+
         catalogo.appendChild(Card);
     });
 }
 
-// Filtros
+function openModal(habitacion) {
+    const overlay = document.querySelector(".modal-overlay");
+    overlay.style.display = "flex";
+
+    document.querySelector(".modal-imagen").src = habitacion.imagen;
+    document.querySelector(".modal-titulo").textContent = habitacion.nombre;
+    document.querySelector(".modal-descripcion").textContent = habitacion.descripcion;
+    document.querySelector(".modal-capacidad").textContent = `Capacidad: ${habitacion.capacidad} personas`;
+    document.querySelector(".modal-banos").textContent = `Baños: ${habitacion.banos}`;
+    document.querySelector(".modal-precio").textContent = `Precio: $${parseInt(habitacion.precio).toLocaleString()} por noche`;
+}
+
+function closeModal() {
+    document.querySelector(".modal-overlay").style.display = "none";
+}
+
 function applyFilters() {
     const capacidad = document.getElementById("capacidad").value;
     const precio = document.getElementById("precio").value;
@@ -43,26 +60,12 @@ function applyFilters() {
     displayRooms(HabitacionesFiltro);
 }
 
-// Modal
-function openModal(index) {
-    const habitacion = ListaHabitaciones[index];
-    document.querySelector(".modal-overlay").style.display = "flex";
-    document.querySelector(".modal-imagen").src = habitacion.imagen;
-    document.querySelector(".modal-titulo").textContent = habitacion.nombre;
-    document.querySelector(".modal-descripcion").textContent = habitacion.descripcion;
-    document.querySelector(".modal-capacidad").textContent = habitacion.capacidad;
-    document.querySelector(".modal-banos").textContent = habitacion.banos;
-    document.querySelector(".modal-precio").textContent = `$${habitacion.precio.toLocaleString()}`;
-}
-
-function closeModal() {
-    document.querySelector(".modal-overlay").style.display = "none";
-}
-
-// Eventos
 document.addEventListener("DOMContentLoaded", () => {
     displayRooms(ListaHabitaciones);
     document.getElementById("applyFiltersBtn").addEventListener("click", applyFilters);
-    document.querySelector(".modal-overlay").addEventListener("click", closeModal);
+    const modalOverlay = document.querySelector(".modal-overlay");
+    modalOverlay.addEventListener("click", (e) => {
+        if (e.target === modalOverlay) closeModal();
+    });
     document.querySelector(".modal-cerrar").addEventListener("click", closeModal);
 });
