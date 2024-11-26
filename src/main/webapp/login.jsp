@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap">
     <title>Login</title>
-    <script type="module" src="auth/firebaseauth.js"></script>
+    <script type="module" src="auth/firebaseAuthScript.js"></script>
     <link rel="stylesheet" href="loginStyle.css">
 </head>
 <body>
@@ -68,7 +68,7 @@
         <button id="signUpButton">Registrarse</button>
     </div>
 </div>
-<script src="JavaScript/script.js"></script>
+<script src="JavaScript/loginModalScript.js"></script>
 
 </body>
 </html>

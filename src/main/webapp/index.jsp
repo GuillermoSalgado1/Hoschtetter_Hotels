@@ -11,13 +11,13 @@
           rel="stylesheet">
     <link rel="stylesheet" href="indexStyle.css">
     <title>Hoschtetter Hotels</title>
-    <script type="module" src="JavaScript/indexDisplayName.js"></script>
+    <script type="module" src="JavaScript/indexDynamicNameScript.js"></script>
 </head>
 
 <body>
 <header class="header">
     <div class="menu container">
-        <input type="checkbox" id="menu" />
+        <input type="checkbox" id="menu"/>
         <label for="menu">
             <img src="images/menu.png" class="menu-icono" alt="">
         </label>
@@ -44,16 +44,7 @@
             animi placeat illum aspernatur!
         </p>
 
-        <form class="search-box" >
-
-            <div class="search-item" id="filter-form">
-                <label>Fecha inicio</label>
-                <input type="date" name="fechaInicio">
-            </div>
-            <div class="search-item">
-                <label>Fecha termino</label>
-                <input type="date" name="fechaTermino">
-            </div>
+        <form class="search-box">
             <div class="search-item">
                 <label for="capacidad">Personas</label>
                 <select id="capacidad" name="capacidad">
@@ -73,7 +64,7 @@
                     <option value="100-159">$100.000 - $159.999</option>
                 </select>
             </div>
-            <button type="button" class="search-button" id="applyFiltersBtn" >Filtrar</button>
+            <button type="button" class="search-button" id="applyFiltersBtn">Filtrar</button>
         </form>
 
     </div>
@@ -92,111 +83,20 @@
                 <p><strong>Capacidad:</strong> <span class="modal-capacidad"></span> persona/s</p>
                 <p><strong>Baños:</strong> <span class="modal-banos"></span></p>
                 <p><strong>Precio:</strong> <span class="modal-precio"></span></p>
+                <form class="modal-reservar-form" method="POST" action="CalculatePriceServlet">
+                    <input type="hidden" id="habitacionPrecio" name="precioPorNoche">
+                    <input type="hidden" id="habitacionNombre" name="nombreHabitacion">
+                    <label for="fechaInicio">Llegada</label>
+                    <input type="date" id="fechaInicio" name="fechaInicio" required>
+                    <label for="fechaTermino">Salida</label>
+                    <input type="date" id="fechaTermino" name="fechaTermino" required>
+                    <button type="submit">Calcular Monto</button>
+                </form>
+                <div id="precioCalculado"></div>
             </div>
         </div>
     </div>
-    <script type="module" src="JavaScript/catalogoJS.js"></script>
-</section>
-
-<main class="services">
-
-    <div class="services-content container">
-        <h2>lorem</h2>
-
-        <div class="servicios-group">
-
-            <div class="services-1">
-                <img src="#" alt="">
-                <h3>Servicio 1</h3>
-            </div>
-            <div class="services-1">
-                <img src="#" alt="">
-                <h3>Servicio 2</h3>
-            </div>
-            <div class="services-1">
-                <img src="#" alt="">
-                <h3>Servicio 3</h3>
-            </div>
-
-        </div>
-        <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa non laborum aspernatur saepe
-            voluptas doloribus obcaecati sequi ad, blanditiis aliquam,
-            quisquam nisi, est animi quas magnam. Harum eos earum eveniet.
-        </p>
-        <a href="#" class="btn-1">Informacion</a>
-    </div>
-</main>
-
-<section class="general">
-
-    <div class="general-1">
-        <h2>Lorem ipsum dolor</h2>
-        <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa non laborum aspernatur saepe
-            voluptas doloribus obcaecati sequi ad, blanditiis aliquam,
-            quisquam nisi, est animi quas magnam. Harum eos earum eveniet.
-        </p>
-        <a href="#" class="btn-1">Informacion</a>
-    </div>
-    <div class="general-2"></div>
-
-</section>
-
-<section class="general">
-
-    <div class="general-3"></div>
-
-    <div class="general-1">
-        <h2>Lorem ipsum dolor</h2>
-        <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa non laborum aspernatur saepe
-            voluptas doloribus obcaecati sequi ad, blanditiis aliquam,
-            quisquam nisi, est animi quas magnam. Harum eos earum eveniet.
-        </p>
-        <a href="#" class="btn-1">Informacion</a>
-    </div>
-</section>
-
-<section class="blog container">
-
-    <h2>Blog</h2>
-    <p>voluptas doloribus obcaecati sequi ad, blanditiis aliquam</p>
-    <div class="blog-content">
-        <div class="blog-1">
-            <img src="#">
-            <h3>Blog 1</h3>
-            <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa non laborum aspernatur saepe
-                voluptas doloribus obcaecati sequi ad, blanditiis aliquam,
-                quisquam nisi, est animi quas magnam. Harum eos earum eveniet.
-            </p>
-
-        </div>
-        <div class="blog-1">
-            <img src="#">
-            <h3>Blog 2</h3>
-            <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa non laborum aspernatur saepe
-                voluptas doloribus obcaecati sequi ad, blanditiis aliquam,
-                quisquam nisi, est animi quas magnam. Harum eos earum eveniet.
-            </p>
-
-        </div>
-        <div class="blog-1">
-            <img src="#">
-            <h3>Blog 3</h3>
-            <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa non laborum aspernatur saepe
-                voluptas doloribus obcaecati sequi ad, blanditiis aliquam,
-                quisquam nisi, est animi quas magnam. Harum eos earum eveniet.
-            </p>
-
-        </div>
-    </div>
-
-    <a href="#" class="btn-1">Informacion</a>
-
+    <script type="module" src="JavaScript/catalogoScript.js"></script>
 </section>
 
 <footer class="footer">
@@ -235,7 +135,7 @@
                 <li><a href="#">lorem</a></li>
                 <li><a href="#">lorem</a></li>
                 <li><a href="#">lorem</a></li>
-                <li><a href="#">lorem</a></li>
+                <li><a href="payment.jsp">Portal de pago test</a></li>
             </ul>
         </div>
     </div>

@@ -99,13 +99,13 @@ body {
 
 .search-box {
     display: flex;
-    align-items: center;
+    justify-content: center;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     gap: 25px;
-    width: 865px;
+    width: 500px;
     margin-bottom: 15px;
     position: relative;
     top: 4rem;
@@ -132,7 +132,19 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 14px;
-    width: 150px;
+    width: 155px;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+    color: #333;
+    cursor: pointer;
+}
+
+.search-item input[type="text"],
+.search-item input[type="date"],
+.search-item select:focus {
+    border: 1px solid transparent;
+    box-shadow: 0px 0px 0px 2px #474747;
+    background-color: transparent;
 }
 
 .search-item select {
@@ -148,16 +160,12 @@ body {
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    position: relative;
-    left: 0.70rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-
-
+    box-shadow: 0px 0px 0px 0px #FFFFFF, 0px 0px 0px 0px #000000;
+    transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
 }
 
 .search-button:hover {
-    background-color: #333;
+    box-shadow: 0px 0px 0px 2px #FFFFFF, 0px 0px 0px 4px #0000003a;
 }
 
 /* ----Catalogo---- */

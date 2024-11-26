@@ -6,6 +6,8 @@ const ListaHabitaciones = [
     { nombre: "Habitación individual", capacidad: "1",  precio: "20000", imagen: "images/habitacion-doble.jpg", descripcion: "Un espacio pensado para quienes viajan solos. Esta habitación combina simplicidad y confort, asegurando una estancia relajante y funcional para descansar o trabajar.", banos: "1"},
     { nombre: "Habitación doble deluxe", capacidad: "2", precio: "50000", imagen: "images/habitacion-doble.jpg", descripcion: "Una habitación amplia con detalles de lujo, perfecta para dos personas. Ofrece acabados modernos, muebles elegantes y un ambiente diseñado para garantizar el máximo confort y estilo.", banos: "2"},
     { nombre: "Habitación individual deluxe", capacidad: "1", precio: "35000", imagen: "images/habitacion-doble.jpg", descripcion: "La opción perfecta para una persona que desea una experiencia exclusiva. Con un diseño sofisticado y servicios de calidad superior, esta habitación garantiza una estancia placentera y memorable.", banos: "1"},
+    { nombre: "Habitación individual deluxe", capacidad: "1", precio: "35000", imagen: "images/habitacion-doble.jpg", descripcion: "La opción perfecta para una persona que desea una experiencia exclusiva. Con un diseño sofisticado y servicios de calidad superior, esta habitación garantiza una estancia placentera y memorable.", banos: "1"},
+    { nombre: "Habitación individual deluxe", capacidad: "1", precio: "35000", imagen: "images/habitacion-doble.jpg", descripcion: "La opción perfecta para una persona que desea una experiencia exclusiva. Con un diseño sofisticado y servicios de calidad superior, esta habitación garantiza una estancia placentera y memorable.", banos: "1"},
 ];
 
 function displayRooms(Habitaciones) {
@@ -35,13 +37,19 @@ function openModal(habitacion) {
     const overlay = document.querySelector(".modal-overlay");
     overlay.style.display = "flex";
 
+    // Actualizar la información visible del modal
     document.querySelector(".modal-imagen").src = habitacion.imagen;
     document.querySelector(".modal-titulo").textContent = habitacion.nombre;
     document.querySelector(".modal-descripcion").textContent = habitacion.descripcion;
     document.querySelector(".modal-capacidad").textContent = `Capacidad: ${habitacion.capacidad} personas`;
     document.querySelector(".modal-banos").textContent = `Baños: ${habitacion.banos}`;
     document.querySelector(".modal-precio").textContent = `Precio: $${parseInt(habitacion.precio).toLocaleString()} por noche`;
+
+    // Actualizar campos ocultos del formulario
+    document.getElementById("habitacionPrecio").value = habitacion.precio;
+    document.getElementById("habitacionNombre").value = habitacion.nombre;
 }
+
 
 function closeModal() {
     document.querySelector(".modal-overlay").style.display = "none";
