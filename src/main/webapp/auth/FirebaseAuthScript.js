@@ -1,7 +1,11 @@
+import {initializeApp} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import {getFirestore, setDoc, doc} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 const firebaseConfig = {
     apiKey: "AIzaSyDsq6hpTf2TyyxsdP-vCAa0ZfEjfvoXUmQ",
     authDomain: "testproyectpoo.firebaseapp.com",
@@ -65,8 +69,7 @@ signUp.addEventListener('click', (event) => {
             const errorCode = error.code;
             if (errorCode == 'auth/email-already-in-use') {
                 showMessage('El correo ingresado ya esta en uso.', 'signUpMessage');
-            }
-            else {
+            } else {
                 showMessage('Inhabilitado para crear usuario.', 'signUpMessage');
             }
         })
@@ -92,8 +95,7 @@ signIn.addEventListener('click', (event) => {
             if (errorCode === 'auth/invalid-credential') {
                 showMessage('Correo o contraseña incorrectos.', 'signInMessage');
 
-            }
-            else {
+            } else {
                 showMessage('La cuenta no existe.', 'signInMessage');
             }
         })

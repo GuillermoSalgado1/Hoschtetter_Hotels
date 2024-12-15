@@ -9,6 +9,7 @@
 body {
     font-family: "Montserrat", sans-serif;
 }
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -42,15 +43,16 @@ body {
 
 }
 
-.menu .navbar ul li a{
+.menu .navbar ul li a {
     font-size: 18px;
     padding: 20px;
-    padding-right: 10px ;
+    padding-right: 10px;
     color: #FFFDFC;
     display: block;
     font-weight: 600;
     transition: color 0.3s;
 }
+
 .menu .navbar ul li a:hover {
     color: #727272;
 }
@@ -91,8 +93,8 @@ body {
 .btn-1 {
     display: inline-block;
     padding: 11px 35px;
-    background: rgb(48,48,48);
-    background: linear-gradient(90deg, rgba(48,48,48,1) 0%, rgba(0,0,0,1) 80%, rgba(0,0,0,1) 100%);
+    background: rgb(48, 48, 48);
+    background: linear-gradient(90deg, rgba(48, 48, 48, 1) 0%, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 1) 100%);
     color: #f9fafc;
     text-transform: uppercase;
 }
@@ -109,6 +111,18 @@ body {
     margin-bottom: 15px;
     position: relative;
     top: 4rem;
+}
+
+.search-box-modal {
+    display: flex;
+    justify-content: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 25px;
+    width: 520px;
+    margin-bottom: 15px;
 }
 
 .search-item {
@@ -170,7 +184,7 @@ body {
 
 /* ----Catalogo---- */
 
-.catalogo-group{
+.catalogo-group {
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -186,29 +200,35 @@ body {
 
 .habitacion-card {
     width: 300px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    min-height: 345px;
     overflow: hidden;
+    border-radius: 2px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     margin: 16px;
     text-align: center;
     cursor: pointer;
     transition: 0.5s;
 }
-.habitacion-card:hover{
+
+.habitacion-card:hover {
     transform: translateY(-20px);
 }
 
 .habitacion-card img {
     width: 100%;
-    height: 200px;
+    height: 300px;
     object-fit: cover;
     cursor: pointer;
 }
 
 .habitacion-card .info {
-    padding: 16px;
+    padding: 5px;
     cursor: pointer;
+}
+
+.habitacion-card .title-card {
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .descripcion {
@@ -223,8 +243,8 @@ body {
     font-size: 1em;
     color: #333;
     margin-top: 5px;
+    margin-bottom: 5px;
     text-align: center;
-    font-weight: bold;
     cursor: pointer;
 }
 

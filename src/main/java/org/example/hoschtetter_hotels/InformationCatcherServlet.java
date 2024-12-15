@@ -5,18 +5,21 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-@WebServlet("/CalculatePriceServlet")
-public class CalculatePriceServlet extends HttpServlet {
+@WebServlet("/InformationCatcherServlet")
+public class InformationCatcherServlet extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String fechaInicioStr = request.getParameter("fechaInicio");
         String fechaTerminoStr = request.getParameter("fechaTermino");
         String precioPorNocheStr = request.getParameter("precioPorNoche");
         String nombreHabitacion = request.getParameter("nombreHabitacion");
+        String habitacionId = request.getParameter("habitacionId");
 
         if (fechaInicioStr == null || fechaTerminoStr == null || precioPorNocheStr == null) {
             response.sendRedirect("index.jsp?error=Datos incompletos");
@@ -37,6 +40,9 @@ public class CalculatePriceServlet extends HttpServlet {
 
         request.setAttribute("montoTotal", montoTotal);
         request.setAttribute("nombreHabitacion", nombreHabitacion);
+        request.setAttribute("fechaInicio", fechaInicioStr);
+        request.setAttribute("fechaTermino", fechaTerminoStr);
+        request.setAttribute("habitacionId", habitacionId);
 
         request.getRequestDispatcher("payment.jsp").forward(request, response);
     }

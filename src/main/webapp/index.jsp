@@ -11,7 +11,7 @@
           rel="stylesheet">
     <link rel="stylesheet" href="indexStyle.css">
     <title>Hoschtetter Hotels</title>
-    <script type="module" src="JavaScript/indexDynamicNameScript.js"></script>
+    <script type="module" src="JavaScript/IndexDisplayNameScript.js"></script>
 </head>
 
 <body>
@@ -23,15 +23,23 @@
         </label>
         <nav class="navbar">
             <ul>
-                <li><span id="loggedUserFName" style="font-size: 18px;
+                <li>
+                    <span id="loggedUserFName" style="
+                        font-size: 18px;
                         padding: 20px;
                         padding-right: 10px;
                         color: #FFFDFC;
                         display: block;
                         font-weight: 600;
-                        cursor: default">
-                </span></li>
-                <li><a href="login.jsp" id="loginLink">Iniciar sesión</a></li>
+                        cursor: default;">
+                    </span>
+                </li>
+                <li>
+                    <a href="login.jsp" id="loginLink">Iniciar sesión</a>
+                </li>
+                <li>
+                    <a href="reservations.jsp" class="btn" style="display: none;">Mis Reservaciones</a>
+                </li>
             </ul>
         </nav>
     </div>
@@ -48,7 +56,7 @@
             <div class="search-item">
                 <label for="capacidad">Personas</label>
                 <select id="capacidad" name="capacidad">
-                    <option value="">Seleccionar...</option>
+                    <option value="">Sin filtro</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="4">4</option>
@@ -57,7 +65,7 @@
             <div class="search-item">
                 <label for="precio">Precio</label>
                 <select id="precio" name="precio">
-                    <option value="">Seleccionar...</option>
+                    <option value="">Sin filtro</option>
                     <option value="20-39">$20.000 - $39.999</option>
                     <option value="40-69">$40.000 - $69.999</option>
                     <option value="70-99">$70.000 - $99.999</option>
@@ -83,62 +91,29 @@
                 <p><strong>Capacidad:</strong> <span class="modal-capacidad"></span> persona/s</p>
                 <p><strong>Baños:</strong> <span class="modal-banos"></span></p>
                 <p><strong>Precio:</strong> <span class="modal-precio"></span></p>
-                <form class="modal-reservar-form" method="POST" action="CalculatePriceServlet">
+                <form class="search-box-modal" method="POST" action="InformationCatcherServlet">
+                    <input type="hidden" id="habitacionId" name="habitacionId">
                     <input type="hidden" id="habitacionPrecio" name="precioPorNoche">
                     <input type="hidden" id="habitacionNombre" name="nombreHabitacion">
-                    <label for="fechaInicio">Llegada</label>
-                    <input type="date" id="fechaInicio" name="fechaInicio" required>
-                    <label for="fechaTermino">Salida</label>
-                    <input type="date" id="fechaTermino" name="fechaTermino" required>
-                    <button type="submit">Calcular Monto</button>
+
+                    <div class="search-item">
+                        <label for="fechaInicio">Llegada</label>
+                        <input type="date" id="fechaInicio" name="fechaInicio" required>
+                    </div>
+                    <div class="search-item">
+                        <label for="fechaTermino">Salida</label>
+                        <input type="date" id="fechaTermino" name="fechaTermino" required>
+                    </div>
+                    <button type="submit" class="search-button" id="ReservarBtn">Reservar</button>
                 </form>
                 <div id="precioCalculado"></div>
             </div>
         </div>
     </div>
-    <script type="module" src="JavaScript/catalogoScript.js"></script>
+    <script type="module" src="JavaScript/CatalogDynamicScript.js"></script>
 </section>
 
 <footer class="footer">
-
-    <div class="footer-content container">
-        <div class="link">
-            <h3>Lorem</h3>
-            <ul>
-                <li><a href="#">lorem</a></li>
-                <li><a href="#">lorem</a></li>
-                <li><a href="#">lorem</a></li>
-                <li><a href="#">lorem</a></li>
-            </ul>
-        </div>
-        <div class="link">
-            <h3>Lorem</h3>
-            <ul>
-                <li><a href="#">lorem</a></li>
-                <li><a href="#">lorem</a></li>
-                <li><a href="#">lorem</a></li>
-                <li><a href="#">lorem</a></li>
-            </ul>
-        </div>
-        <div class="link">
-            <h3>Lorem</h3>
-            <ul>
-                <li><a href="#">lorem</a></li>
-                <li><a href="#">lorem</a></li>
-                <li><a href="#">lorem</a></li>
-                <li><a href="#">lorem</a></li>
-            </ul>
-        </div>
-        <div class="link">
-            <h3>Lorem</h3>
-            <ul>
-                <li><a href="#">lorem</a></li>
-                <li><a href="#">lorem</a></li>
-                <li><a href="#">lorem</a></li>
-                <li><a href="payment.jsp">Portal de pago test</a></li>
-            </ul>
-        </div>
-    </div>
 </footer>
 
 </body>

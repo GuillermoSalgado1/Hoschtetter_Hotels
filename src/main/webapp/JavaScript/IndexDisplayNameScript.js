@@ -13,47 +13,54 @@ const firebaseConfig = {
     measurementId: "G-8W3H69G975"
 };
 
-// Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
 
 onAuthStateChanged(auth, (user) => {
-    const loggedInUserId = localStorage.getItem('loggedInUserId');
+    const loggedInUserId = localStorage.getItem("loggedInUserId");
+    const reservationsLink = document.querySelector(".btn"); // Enlace "Mis Reservaciones"
 
     if (loggedInUserId) {
         const docRef = doc(db, "users", loggedInUserId);
+
         getDoc(docRef)
             .then((docSnap) => {
                 if (docSnap.exists()) {
                     const userData = docSnap.data();
-                    document.getElementById('loggedUserFName').innerText = "Bienvenido " + userData.firstName;
+                    document.getElementById("loggedUserFName").innerText = "Bienvenido " + userData.firstName;
 
-                    let loginLink = document.getElementById('loginLink');
-                    loginLink.innerText = 'Cerrar sesión';
-                    loginLink.addEventListener('click', logoutUser);
+                    let loginLink = document.getElementById("loginLink");
+                    loginLink.innerText = "Cerrar sesión";
+                    loginLink.addEventListener("click", logoutUser);
 
+                    reservationsLink.style.display = "block";
                 } else {
-                    console.log("No se encontraron documentos para el id designado.")
+                    console.error("No se encontró el documento del usuario.");
                 }
             })
             .catch((error) => {
-                console.log("Error al obtener documentos.");
-            })
+                console.error("Error al obtener los datos del usuario:", error);
+            });
     } else {
-        console.log("User Id no fue encontrado en la base de datos.");
+
+        console.log("No hay usuario autenticado.");
+        document.getElementById("loggedUserFName").innerText = "";
+
+        reservationsLink.style.display = "none";
     }
 });
 
 function logoutUser(event) {
     event.preventDefault();
-    localStorage.removeItem('loggedInUserId');
+    localStorage.removeItem("loggedInUserId");
     signOut(auth)
         .then(() => {
-            console.log('Sesión cerrada');
+            console.log("Sesión cerrada exitosamente.");
             window.location.href = "index.jsp";
         })
         .catch((error) => {
-            console.error('Error al cerrar sesión:', error);
+            console.error("Error al cerrar sesión:", error);
         });
 }

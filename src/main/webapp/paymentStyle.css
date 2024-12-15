@@ -2,9 +2,18 @@ html {
     font-family: "Montserrat", sans-serif;
 }
 
-body{
-    position:relative;
-    top: 17vh;
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.7)),
+    url(images/Hotel-Ottilia-Junior-Suite.webp);
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .modal {
@@ -31,10 +40,12 @@ body{
 .resumen {
     width: 30%;
     padding: 20px;
+    padding-top: 15px;
     background-color: #f9f9f9;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     display: flex;
+    margin: 0 auto;
     flex-direction: column;
     text-align: center;
 }
@@ -59,7 +70,7 @@ body{
     padding: 20px;
     width: 65%;
     flex-grow: 1;
-    min-height: 300px;
+    min-height: 250px;
 }
 
 .payment-options {
@@ -100,7 +111,7 @@ body{
     margin: 0 10px;
 }
 
-.separador>p {
+.separador > p {
     word-break: keep-all;
     display: block;
     text-align: center;
@@ -202,3 +213,5 @@ body{
     max-width: 40%;
 
 }
+
+

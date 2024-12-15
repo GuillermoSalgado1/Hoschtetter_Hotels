@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -9,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap">
     <title>Login</title>
-    <script type="module" src="auth/firebaseAuthScript.js"></script>
+    <script type="module" src="auth/FirebaseAuthScript.js"></script>
     <link rel="stylesheet" href="loginStyle.css">
 </head>
 <body>
@@ -52,7 +51,7 @@
 
         <div class="input-group">
             <i class="fas fa-envelope"></i>
-            <input type="email" id="email"  required>
+            <input type="email" id="email" required>
             <label for="email">Correo</label>
         </div>
         <div class="input-group">
@@ -68,7 +67,7 @@
         <button id="signUpButton">Registrarse</button>
     </div>
 </div>
-<script src="JavaScript/loginModalScript.js"></script>
+<script src="JavaScript/LoginModalSwapScript.js"></script>
 
 </body>
 </html>

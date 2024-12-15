@@ -11,13 +11,15 @@ document.addEventListener("DOMContentLoaded", () => {
         paymentBtn.style.marginTop = "";
         paymentMethodText.textContent = "Paga usando tarjeta de crédito";
     }
+
     function showPaypalOption() {
         creditCardForm.style.display = "none";
         paymentBtn.textContent = "Ir a PayPal";
-        paymentBtn.style.marginTop = "60px";
+        paymentBtn.style.marginTop = "20px";
         paymentMethodText.textContent = "Paga en el portal de PayPal";
 
     }
+
     showCardForm();
 
     cardBtn.addEventListener("click", showCardForm);

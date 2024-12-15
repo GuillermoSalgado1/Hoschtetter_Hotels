@@ -3,7 +3,7 @@ document.querySelector('.modal-reservar-form').addEventListener('submit', async 
     const formData = new FormData(event.target);
 
     try {
-        const response = await fetch('CalculatePriceServlet', {
+        const response = await fetch('InformationCatcherServlet', {
             method: 'POST',
             body: formData
         });
