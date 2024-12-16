@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Reservaciones</title>
-    <link rel="stylesheet" href="reservationStyle.css">
+    <link rel="stylesheet" href="styles/reservationStyle.css">
 </head>
 <body>
 <div class="container">

@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap">
     <title>Login</title>
     <script type="module" src="auth/FirebaseAuthScript.js"></script>
-    <link rel="stylesheet" href="loginStyle.css">
+    <link rel="stylesheet" href="styles/loginStyle.css">
 </head>
 <body>
 <div class="container" id="signup" style="display:none;">
