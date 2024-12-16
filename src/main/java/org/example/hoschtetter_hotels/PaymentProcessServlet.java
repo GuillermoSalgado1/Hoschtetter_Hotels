@@ -11,135 +11,139 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Date;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebServlet("/PaymentProcessServlet")
 public class PaymentProcessServlet extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(PaymentProcessServlet.class.getName());
+    private final Firestore database = FirestoreClient.getFirestore();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String usuarioId = request.getParameter("loggedInUserId");
-        String nombreHabitacion = request.getParameter("nombreHabitacion");
-        String fechaInicio = request.getParameter("fechaInicio");
-        String fechaFin = request.getParameter("fechaTermino");
-        String montoTotal = request.getParameter("montoTotal");
-
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-        if (usuarioId == null || usuarioId.trim().isEmpty()) {
-            out.println("<h2>Error: Debes iniciar sesión para realizar una reserva.</h2>");
-            out.println("<a href='index.jsp'>Volver al inicio</a>");
-            return;
-        }
-
-        if (fechaInicio == null || fechaInicio.isEmpty() || fechaFin == null || fechaFin.isEmpty()) {
-            out.println("<h2>Error: Las fechas de inicio y fin deben proporcionarse y no deben estar vacías.</h2>");
-            out.println("<a href='index.jsp'>Volver al inicio</a>");
-            return;
-        }
-
         try {
-            java.sql.Date inicio = java.sql.Date.valueOf(fechaInicio);
-            java.sql.Date fin = java.sql.Date.valueOf(fechaFin);
 
-            List<String> availableRoomIds = findAvailableRoomIds(nombreHabitacion, inicio, fin);
-            if (availableRoomIds.isEmpty()) {
-                out.println("<h2>No hay habitaciones disponibles de este tipo para las fechas seleccionadas.</h2>");
-                out.println("<a href='index.jsp'>Volver al inicio</a>");
+            String usuarioId = Optional.ofNullable(request.getParameter("loggedInUserId")).orElse("").trim();
+            String nombreHabitacion = request.getParameter("nombreHabitacion");
+            String fechaInicio = request.getParameter("fechaInicio");
+            String fechaFin = request.getParameter("fechaTermino");
+            String montoTotalStr = request.getParameter("montoTotal");
+
+            if (usuarioId.isEmpty()) {
+                showError(out, "Debes iniciar sesión para realizar una reserva.");
                 return;
             }
 
-            String habitacionId = availableRoomIds.get(0); // Esto selecciona la primera habitación disponible.
-            if (saveReservationAndInvoiceToFirestore(usuarioId, habitacionId, nombreHabitacion, inicio, fin, montoTotal)) {
-                out.println("<h2>Reservación exitosa y factura generada.</h2>");
-            } else {
-                out.println("<h2>Error al guardar la reservación y generar la factura.</h2>");
+            if (nombreHabitacion == null || fechaInicio == null || fechaFin == null || montoTotalStr == null) {
+                showError(out, "Todos los campos son obligatorios y deben contener valores válidos.");
+                return;
             }
 
+            Date inicio = Date.valueOf(fechaInicio);
+            Date fin = Date.valueOf(fechaFin);
+
+            if (!inicio.before(fin)) {
+                showError(out, "La fecha de inicio debe ser anterior a la fecha de fin.");
+                return;
+            }
+
+            List<String> availableRoomIds = findAvailableRoomIds(nombreHabitacion, inicio, fin);
+            if (availableRoomIds.isEmpty()) {
+                showError(out, "No hay habitaciones disponibles para las fechas seleccionadas.");
+                return;
+            }
+
+            String habitacionId = availableRoomIds.get(0);
+            if (saveReservationAndInvoice(usuarioId, habitacionId, nombreHabitacion, inicio, fin, montoTotalStr)) {
+                out.println("<h2>Reservación realizada con éxito. ¡Gracias por confiar en nosotros!</h2>");
+            } else {
+                showError(out, "Ocurrió un error al procesar la reserva. Intente nuevamente.");
+            }
+
+        } catch (IllegalArgumentException e) {
+            logger.log(Level.SEVERE, "Formato de fecha inválido.", e);
+            showError(out, "El formato de las fechas es inválido. Utilice el formato yyyy-MM-dd.");
         } catch (Exception e) {
-            out.println("<h2>Error al procesar las fechas. Formato incorrecto o problema al procesar.</h2>");
-            out.println("<a href='index.jsp'>Volver al inicio</a>");
+            logger.log(Level.SEVERE, "Error inesperado.", e);
+            showError(out, "Ocurrió un error inesperado. Intente nuevamente.");
         }
         out.println("<a href='index.jsp'>Volver al inicio</a>");
     }
 
-    private List<String> findAvailableRoomIds(String nombreHabitacion, Date fechaInicio, Date fechaFin) {
-        Firestore db = FirestoreClient.getFirestore();
+    private void showError(PrintWriter out, String message) {
+        out.println(String.format("<h2>Error: %s</h2>", message));
+        out.println("<a href='index.jsp'>Volver al inicio</a>");
+    }
+
+    private List<String> findAvailableRoomIds(String roomName, Date startDate, Date endDate) {
         List<String> availableRoomIds = new ArrayList<>();
         try {
-            ApiFuture<QuerySnapshot> future = db.collection("habitaciones")
-                    .whereEqualTo("nombre", nombreHabitacion)
+            ApiFuture<QuerySnapshot> future = database.collection("habitaciones")
+                    .whereEqualTo("nombre", roomName)
                     .get();
-
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             for (QueryDocumentSnapshot doc : documents) {
                 String roomId = doc.getId();
-                if (areDatesAvailable(roomId, fechaInicio, fechaFin)) {
+                if (areDatesAvailable(roomId, startDate, endDate)) {
                     availableRoomIds.add(roomId);
                 }
             }
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error al buscar habitaciones disponibles.", e);
         }
         return availableRoomIds;
     }
 
-    private boolean areDatesAvailable(String roomId, Date fechaInicio, Date fechaFin) {
-        Firestore db = FirestoreClient.getFirestore();
+    private boolean areDatesAvailable(String roomId, Date startDate, Date endDate) {
         try {
-            ApiFuture<QuerySnapshot> future = db.collection("reservaciones")
+            ApiFuture<QuerySnapshot> future = database.collection("reservaciones")
                     .whereEqualTo("habitacionId", roomId)
                     .get();
-
             List<QueryDocumentSnapshot> reservations = future.get().getDocuments();
             for (QueryDocumentSnapshot reservation : reservations) {
-                Date existingFechaInicio = reservation.getTimestamp("fechaInicio").toDate();
-                Date existingFechaFin = reservation.getTimestamp("fechaFin").toDate();
+                Date existingStartDate = new java.sql.Date(reservation.getTimestamp("fechaInicio").toDate().getTime());
+                Date existingEndDate = new java.sql.Date(reservation.getTimestamp("fechaFin").toDate().getTime());
 
-                if ((fechaInicio.before(existingFechaFin) && fechaFin.after(existingFechaInicio)) ||
-                        (fechaInicio.equals(existingFechaInicio)) || (fechaFin.equals(existingFechaFin))) {
-                    return false; // Hay colisión de fechas.
+                if (!startDate.after(existingEndDate) && !endDate.before(existingStartDate)) {
+                    return false; // Colisión de fechas
                 }
             }
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error al verificar disponibilidad de fechas.", e);
         }
-        return true; // No hay colisiones de fechas.
+        return true;
     }
 
-    private boolean saveReservationAndInvoiceToFirestore(String usuarioId, String habitacionId, String nombreHabitacion, Date fechaInicio, Date fechaFin, String montoTotal) {
-        Firestore db = FirestoreClient.getFirestore();
+    private boolean saveReservationAndInvoice(String userId, String roomId, String roomName, Date startDate, Date endDate, String totalAmount) {
         try {
             Map<String, Object> reservation = new HashMap<>();
-            reservation.put("usuarioId", usuarioId);
-            reservation.put("habitacionId", habitacionId);
-            reservation.put("nombreHabitacion", nombreHabitacion);
-            reservation.put("fechaInicio", fechaInicio);
-            reservation.put("fechaFin", fechaFin);
-            reservation.put("montoTotal", montoTotal);
+            reservation.put("usuarioId", userId);
+            reservation.put("habitacionId", roomId);
+            reservation.put("nombreHabitacion", roomName);
+            reservation.put("fechaInicio", startDate);
+            reservation.put("fechaFin", endDate);
+            reservation.put("montoTotal", totalAmount);
 
-            ApiFuture<DocumentReference> reservationFuture = db.collection("reservaciones").add(reservation);
-            reservationFuture.get();
+            database.collection("reservaciones").add(reservation).get();
 
             Map<String, Object> invoice = new HashMap<>();
-            invoice.put("usuarioId", usuarioId);
-            invoice.put("habitacionId", habitacionId);
-            invoice.put("nombreHabitacion", nombreHabitacion);
-            invoice.put("montoTotal", montoTotal);
-            invoice.put("fechaEmision", new java.sql.Date(System.currentTimeMillis()));
+            invoice.put("usuarioId", userId);
+            invoice.put("habitacionId", roomId);
+            invoice.put("nombreHabitacion", roomName);
+            invoice.put("montoTotal", totalAmount);
+            invoice.put("fechaEmision", new Date(System.currentTimeMillis()));
 
-            ApiFuture<DocumentReference> invoiceFuture = db.collection("facturas").add(invoice);
-            invoiceFuture.get();
+            database.collection("facturas").add(invoice).get();
 
             return true;
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error al guardar reservación o factura.", e);
             return false;
         }
     }

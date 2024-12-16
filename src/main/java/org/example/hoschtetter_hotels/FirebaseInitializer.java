@@ -34,8 +34,4 @@ public class FirebaseInitializer implements ServletContextListener {
             logger.error("Error initializing FirebaseApp: ", e);
         }
     }
-
-    @Override
-    public void contextDestroyed(ServletContextEvent sce) {
-    }
 }

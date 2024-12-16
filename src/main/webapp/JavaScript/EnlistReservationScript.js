@@ -24,7 +24,6 @@ const db = getFirestore(app);
 const loggedInUserId = localStorage.getItem("loggedInUserId");
 
 const reservationsList = document.getElementById("reservations-list");
-const logoutButton = document.getElementById("logout-btn");
 
 async function loadReservations() {
     if (!loggedInUserId) {
